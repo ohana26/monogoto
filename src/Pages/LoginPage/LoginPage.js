@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Axios from "axios";
 
 import { onlyLetters } from "../../Utils/Validation/Validation";
 
@@ -11,7 +12,15 @@ export default function LoginPage() {
   const loginSubmit = async () => {
     const valid = onlyLetters(symbol);
     if (!valid) {
-      SetMessage("Cant find coin or the input is wrong");
+      SetMessage("Cant find coin or the input is wrong ");
+    } else {
+      const { data } = await Axios.post("http://localhost:1880/symbolLogin", {symbol});
+      console.log("check response ", data)
+
+      if (data.token) {
+      } else {
+        SetMessage("Cant find coin or the input is wrong ");
+      }
     }
   };
 
