@@ -14,6 +14,27 @@ export default function LoginPage() {
 
   const navigate = useNavigate();
 
+  const getToken = () => {
+    const now = new Date(Date.now()).getTime();
+    const timeAllowed = 1000 * 60 * 30;
+    const timeSinceLastLogin = now - localStorage.getItem("lastLoginTime");
+    if (timeSinceLastLogin < timeAllowed) {
+      return localStorage.getItem("token");
+    }
+  };
+
+  const setToken = (token) => {
+    localStorage.setItem("token", token);
+    localStorage.setItem("lastLoginTime", new Date(Date.now()).getTime());
+  };
+
+  useEffect(() => {
+    let token = getToken();
+    if (token) {
+      navigate("/homepage");
+    }
+  });
+
   const loginSubmit = async () => {
     Setload(true);
     const valid = onlyLetters(symbol);
@@ -26,6 +47,7 @@ export default function LoginPage() {
       });
       if (data.token) {
         Setload(false);
+        setToken(data.token)
         navigate("/homepage");
       } else {
         Setload(false);
