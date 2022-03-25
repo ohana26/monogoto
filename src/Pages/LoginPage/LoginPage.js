@@ -5,11 +5,14 @@ import { onlyLetters } from "../../Utils/Validation/Validation";
 
 import { Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [symbol, SetSymbol] = useState("");
   const [message, SetMessage] = useState("");
   const [load, Setload] = useState(false);
+
+  const navigate = useNavigate();
 
   const loginSubmit = async () => {
     Setload(true);
@@ -23,9 +26,10 @@ export default function LoginPage() {
       });
       if (data.token) {
         Setload(false);
+        navigate("/homepage");
       } else {
         Setload(false);
-        SetMessage("Cant find coin or the input is wrong");
+        SetMessage("Cant find coin or the input is wrong ");
       }
     }
   };
