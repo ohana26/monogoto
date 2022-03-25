@@ -1,11 +1,19 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-
 import React, { useEffect, useState } from "react";
+
+import { onlyLetters } from "../../Utils/Validation/Validation";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function LoginPage() {
   const [symbol, SetSymbol] = useState("");
+  const [message, SetMessage] = useState("");
 
-  const loginSubmit = async () => {};
+  const loginSubmit = async () => {
+    const valid = onlyLetters(symbol);
+    if (!valid) {
+      SetMessage("Cant find coin or the input is wrong");
+    }
+  };
 
   return (
     <div>
@@ -17,12 +25,13 @@ export default function LoginPage() {
               <hr />
               <input
                 className="form-control"
-                placeholder="Enter Symbol"
+                placeholder="Passkey"
                 onChange={(event) => SetSymbol(event.target.value)}
               />
             </div>
             <hr />
             <div className="form-check">
+                {message}
             </div>
             <hr />
             <button
