@@ -21,7 +21,9 @@ export default function Table({ data, columns }) {
           <thead>
             <tr>
               {columns.map((column, index) => (
-                <td key={column}>{column}</td>
+                <td key={column}>
+                  <h3>{column}</h3>
+                  </td>
               ))}
             </tr>
           </thead>

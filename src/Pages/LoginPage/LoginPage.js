@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../Utils/Features/token.js";
 
 import { Spinner } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {

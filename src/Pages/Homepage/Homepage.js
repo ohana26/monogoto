@@ -5,6 +5,7 @@ import Table from "../../Components/Table/Table.js";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../Utils/Features/token";
 import { useNavigate } from "react-router-dom";
+import "./Homepage.css";
 
 export default function HomePage() {
   const [data, SetData] = useState([]);
@@ -42,20 +43,19 @@ export default function HomePage() {
   };
 
   return (
-    <div className="container bg-light bg-gradient">
-      <nav
-        className="navbar navbar-light"
-        style={{ "backgroundColor": "#e3f2fd", padding:"15px" }}
-      >
-        <h3>Mongoto</h3>
-        <button className="btn btn-secondary" id="logout" onClick={Logout}>
-          LogOut
-        </button>
-      </nav>
-      <hr />
-      <div className="row">
-        <div className="col">
-          <Table data={data} columns={["Symbol"]}></Table>
+    <div id="homepage">
+      <div className="container ">
+        <nav className="navbar navbar-light" style={{ padding: "15px" }}>
+          <h3>Monogoto</h3>
+          <button className="btn btn-secondary" id="logout" onClick={Logout}>
+            LogOut
+          </button>
+        </nav>
+        <hr />
+        <div className="row">
+          <div className="col">
+            <Table data={data} columns={["Symbol"]}></Table>
+          </div>
         </div>
       </div>
     </div>

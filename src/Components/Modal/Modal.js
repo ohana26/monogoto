@@ -25,7 +25,7 @@ export default function InfoModal({ name }) {
 
   return (
     <div className="d-grid gap-2">
-      <Button variant="outline-secondary" onClick={handleShow}>{name}</Button>
+      <Button variant="dark" onClick={handleShow}>{name}</Button>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
