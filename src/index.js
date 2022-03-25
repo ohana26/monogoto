@@ -3,10 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux'; // whice component has access to the store
+import  tokenReducer from './Utils/Features/token';
+
+const store = configureStore({ // what reducer do we have. the store contains all the global state
+  reducer: {
+    token:tokenReducer
+  }
+})
+
+// reducer take the previus state and a function and return the new state
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
