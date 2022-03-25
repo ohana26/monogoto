@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
+import Modal from "../../Components/Modal/Modal.js";
 
 export default function Table({ data, columns }) {
   const [pageNumber, SetPageNumber] = useState(0);
@@ -28,7 +29,7 @@ export default function Table({ data, columns }) {
             {displayCoins.map((coin, index) => (
               <tr>
                 <td key={index}>
-                 {coin}
+                  <Modal name={coin}></Modal>
                 </td>
               </tr>
             ))}
