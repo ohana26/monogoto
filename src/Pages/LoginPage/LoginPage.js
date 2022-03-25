@@ -3,23 +3,29 @@ import Axios from "axios";
 
 import { onlyLetters } from "../../Utils/Validation/Validation";
 
+import { Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function LoginPage() {
   const [symbol, SetSymbol] = useState("");
   const [message, SetMessage] = useState("");
+  const [load, Setload] = useState(false);
 
   const loginSubmit = async () => {
+    Setload(true);
     const valid = onlyLetters(symbol);
     if (!valid) {
+      Setload(false);
       SetMessage("Cant find coin or the input is wrong ");
     } else {
-      const { data } = await Axios.post("http://localhost:1880/symbolLogin", {symbol});
-      console.log("check response ", data)
-
+      const { data } = await Axios.post("http://localhost:1880/symbolLogin", {
+        symbol,
+      });
       if (data.token) {
+        Setload(false);
       } else {
-        SetMessage("Cant find coin or the input is wrong ");
+        Setload(false);
+        SetMessage("Cant find coin or the input is wrong");
       }
     }
   };
@@ -34,13 +40,13 @@ export default function LoginPage() {
               <hr />
               <input
                 className="form-control"
-                placeholder="Passkey"
+                placeholder="Enter Symbol"
                 onChange={(event) => SetSymbol(event.target.value)}
               />
             </div>
             <hr />
             <div className="form-check">
-                {message}
+              {load === true ? <Spinner animation="border" /> : message}
             </div>
             <hr />
             <button
