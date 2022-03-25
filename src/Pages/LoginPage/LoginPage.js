@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-
 import { onlyLetters } from "../../Utils/Validation/Validation";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../Utils/Features/token.js";
 
 import { Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,6 +13,7 @@ export default function LoginPage() {
   const [message, SetMessage] = useState("");
   const [load, Setload] = useState(false);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const getToken = () => {
@@ -19,13 +21,8 @@ export default function LoginPage() {
     const timeAllowed = 1000 * 60 * 30;
     const timeSinceLastLogin = now - localStorage.getItem("lastLoginTime");
     if (timeSinceLastLogin < timeAllowed) {
-      return localStorage.getItem("token");
+        return localStorage.getItem("token");
     }
-  };
-
-  const setToken = (token) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("lastLoginTime", new Date(Date.now()).getTime());
   };
 
   useEffect(() => {
@@ -47,7 +44,7 @@ export default function LoginPage() {
       });
       if (data.token) {
         Setload(false);
-        setToken(data.token)
+        dispatch(login(data.token));
         navigate("/homepage");
       } else {
         Setload(false);

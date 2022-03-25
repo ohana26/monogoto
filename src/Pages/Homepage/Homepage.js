@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import Table from "../../Components/Table/Table.js";
 
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../Utils/Features/token";
 import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const [data, SetData] = useState([]);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const getToken = () => {
@@ -17,11 +20,6 @@ export default function HomePage() {
       return localStorage.getItem("token");
     }
   };
-
-  const deleteToken = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("lastLoginTime");
-  }
 
   const request = async () => {
     const { data } = await Axios.get("http://localhost:1880/symbolsList");
@@ -39,7 +37,7 @@ export default function HomePage() {
   }, []);
 
   const Logout = () => {
-    deleteToken()
+    dispatch(logout());
     navigate("/");
   };
 
