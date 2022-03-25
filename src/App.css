@@ -36,3 +36,39 @@
     transform: rotate(360deg);
   }
 }
+
+.paginationButtuns { 
+  margin-top: 30px;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.paginationButtuns a {
+  padding: 10px;
+  margin: 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: 1px solid #ced4cf;
+  cursor: pointer;
+  transition: 0.1s background-color ease-in;
+  transition: 0.1s color ease-in;
+}
+
+.paginationButtuns a:hover {
+  background-color: rgb(227, 243, 253);
+  color: #059411;
+}
+
+.paginationDisabled a {
+  background-color: gray;
+  border: 0px;
+  color: white;
+}
+
+.paginationActive a {
+  background-color: rgb(227, 243, 253);
+  color: #059411;
+}
+

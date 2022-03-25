@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import Table from "../../Components/Table/Table.js";
 
 export default function LoginPage() {
   const [data, SetData] = useState([]);
 
   const request = async () => {
     const { data } = await Axios.get("http://localhost:1880/symbolsList");
-    console.log(data)
+    console.log(data);
     if (data.length > 0) {
       SetData(data);
     }
@@ -19,13 +20,14 @@ export default function LoginPage() {
     <div className="container bg-light bg-gradient">
       <nav
         className="navbar navbar-light"
-        style={{ "backgroundColor": "#e3f2fd", padding:"15px" }}
+        style={{ backgroundColor: "#e3f2fd", padding: "15px" }}
       >
         <h3>Mongoto</h3>
       </nav>
       <hr />
       <div className="row">
         <div className="col">
+          <Table data={data} columns={["Symbol"]}></Table>
         </div>
       </div>
     </div>
