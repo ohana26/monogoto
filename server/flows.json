@@ -1,0 +1,25 @@
+[
+    {
+        "id": "6ae91838121b34d4",
+        "type": "http request",
+        "z": "39e8e3f9a4e42644",
+        "name": "symbol",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api2.binance.com/api/v3/ticker/24hr",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "credentials": {},
+        "x": 600,
+        "y": 200,
+        "wires": [
+            [
+                "a90c73c9128144eb"
+            ]
+        ]
+    }
+]
