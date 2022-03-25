@@ -15,5 +15,19 @@ export default function LoginPage() {
     request();
   }, []);
 
-  return <div></div>;
+  return (
+    <div className="container bg-light bg-gradient">
+      <nav
+        className="navbar navbar-light"
+        style={{ "backgroundColor": "#e3f2fd", padding:"15px" }}
+      >
+        <h3>Mongoto</h3>
+      </nav>
+      <hr />
+      <div className="row">
+        <div className="col">
+        </div>
+      </div>
+    </div>
+  );
 }
