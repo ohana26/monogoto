@@ -1,5 +1,13 @@
 [
     {
+        "id": "39e8e3f9a4e42644",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "6ae91838121b34d4",
         "type": "http request",
         "z": "39e8e3f9a4e42644",
@@ -13,12 +21,234 @@
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "credentials": {},
         "x": 600,
         "y": 200,
         "wires": [
             [
                 "a90c73c9128144eb"
+            ]
+        ]
+    },
+    {
+        "id": "08014ddc29bf2d67",
+        "type": "http in",
+        "z": "39e8e3f9a4e42644",
+        "name": "symbolLogin",
+        "url": "/symbolLogin",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 90,
+        "y": 200,
+        "wires": [
+            [
+                "8b926ad89379e86c"
+            ]
+        ]
+    },
+    {
+        "id": "8b926ad89379e86c",
+        "type": "function",
+        "z": "39e8e3f9a4e42644",
+        "name": "SetSymbolParamsAtMsg",
+        "func": "let symbol = msg.payload.symbol;\nmsg.symbolName = symbol;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 200,
+        "wires": [
+            [
+                "6ae91838121b34d4"
+            ]
+        ]
+    },
+    {
+        "id": "1f86312af14a3dc4",
+        "type": "http response",
+        "z": "39e8e3f9a4e42644",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1090,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "934b8f50a51d60ca",
+        "type": "http in",
+        "z": "39e8e3f9a4e42644",
+        "name": "getSymbolsList",
+        "url": "/symbolsList",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 300,
+        "wires": [
+            [
+                "0be18537ba3ced19"
+            ]
+        ]
+    },
+    {
+        "id": "0be18537ba3ced19",
+        "type": "http request",
+        "z": "39e8e3f9a4e42644",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api2.binance.com/api/v3/ticker/24hr",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "149889ee6f2f37c4"
+            ]
+        ]
+    },
+    {
+        "id": "782d002e3558acab",
+        "type": "http response",
+        "z": "39e8e3f9a4e42644",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1090,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "149889ee6f2f37c4",
+        "type": "function",
+        "z": "39e8e3f9a4e42644",
+        "name": "",
+        "func": "let symbolsData = msg.payload;\nlet symbols = [];\n\nsymbolsData.forEach(obj => {\n symbols.push(obj.symbol)\n});\n\nmsg.payload = symbols;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 300,
+        "wires": [
+            [
+                "782d002e3558acab"
+            ]
+        ]
+    },
+    {
+        "id": "a90c73c9128144eb",
+        "type": "function",
+        "z": "39e8e3f9a4e42644",
+        "name": "checkIfSymbolIsPositive",
+        "func": "let symbols = msg.payload;\nlet mySymbolName = msg.symbolName;\nlet isPositiveSymbol = false;\n\nsymbols.forEach(obj => {\n    if (mySymbolName === obj.symbol && obj.priceChangePercent > 0){\n        isPositiveSymbol = true;\n    }\n});\n\nmsg.payload = {\"error\": \"notPositiveValue\"};\nif (isPositiveSymbol){\n    msg.payload = {\"token\": \"77777777\"};\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 200,
+        "wires": [
+            [
+                "1f86312af14a3dc4"
+            ]
+        ]
+    },
+    {
+        "id": "716ac09d39fc30cc",
+        "type": "http in",
+        "z": "39e8e3f9a4e42644",
+        "name": "",
+        "url": "/symbolData",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "c4f2921c02ea9605"
+            ]
+        ]
+    },
+    {
+        "id": "6849ad71f0f31198",
+        "type": "http response",
+        "z": "39e8e3f9a4e42644",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1030,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "334e8913e1af5e37",
+        "type": "http request",
+        "z": "39e8e3f9a4e42644",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api2.binance.com/api/v3/ticker/24hr",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 530,
+        "y": 440,
+        "wires": [
+            [
+                "752ec86609abd416"
+            ]
+        ]
+    },
+    {
+        "id": "752ec86609abd416",
+        "type": "function",
+        "z": "39e8e3f9a4e42644",
+        "name": "",
+        "func": "let mySymbolName = msg.symbolName;\nlet symbolsData = msg.payload;\nlet symbols = [];\n\nsymbolsData.forEach(obj => {\n      if (mySymbolName === obj.symbol ){\n        symbols.push(obj)\n    }\n});\n\nmsg.payload = symbols;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 440,
+        "wires": [
+            [
+                "6849ad71f0f31198"
+            ]
+        ]
+    },
+    {
+        "id": "c4f2921c02ea9605",
+        "type": "function",
+        "z": "39e8e3f9a4e42644",
+        "name": "",
+        "func": "let symbol = msg.payload.name;\nmsg.symbolName = symbol;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 440,
+        "wires": [
+            [
+                "334e8913e1af5e37"
             ]
         ]
     }
